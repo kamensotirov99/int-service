@@ -1,0 +1,37 @@
+<ClothesDTO>
+ <ClothingDTO>
+  <id>e0ba9bb7-7424-4d18-80f1-d3067b5306de</id>
+  <type>bachka si s xml as well</type>
+  <price>30</price>
+  <size>5</size>
+  <gender>female</gender>
+ </ClothingDTO>
+ <ClothingDTO>
+  <id>304dfad0-675a-4690-8c97-653c39af7493</id>
+  <type>bachka si s xml as well</type>
+  <price>30</price>
+  <size>5</size>
+  <gender>female</gender>
+ </ClothingDTO>
+ <ClothingDTO>
+  <id>16c78448-2080-4254-97c4-de2b392558f1</id>
+  <type>T-Shirt</type>
+  <price>19</price>
+  <size>32</size>
+  <gender>Female</gender>
+ </ClothingDTO>
+ <ClothingDTO>
+  <id>ad686423-97ad-47df-8113-66e10821ce7b</id>
+  <type>T-Shirt</type>
+  <price>19</price>
+  <size>32</size>
+  <gender>Female</gender>
+ </ClothingDTO>
+ <ClothingDTO>
+  <id>581989d3-364b-4432-9e76-041a5baae62a</id>
+  <type></type>
+  <price>0</price>
+  <size>0</size>
+  <gender></gender>
+ </ClothingDTO>
+</ClothesDTO>

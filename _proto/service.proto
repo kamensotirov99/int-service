@@ -1,0 +1,430 @@
+syntax = "proto3";
+
+package service;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./";
+
+service ClothingSvc {
+    rpc CreateClothing(CreateClothingRequest) returns (Clothing) {}
+	rpc DeleteClothing(DeleteClothingRequest) returns (EmptyResponse) {}
+	rpc GetAll(GetAllRequest) returns (ClothingListResponse) {}
+}
+
+message CreateClothingRequest {
+    string type = 1;
+	int32 size = 2;
+	int32 price = 3;
+	string gender = 4;
+}
+
+message Clothing {
+    string id = 1;
+    string type = 2;
+	int32 size = 3;
+	int32 price = 4;
+	string gender = 5;
+}
+
+message DeleteClothingRequest {
+	string id = 1;
+}
+
+message ClothingListResponse {
+	repeated Clothing clothes = 1;
+}
+
+message EmptyResponse {}
+
+message GetAllRequest {}
+
+message ListArticlesRequest{
+	int32 elementCount = 1;
+}
+service ArticleSvc{
+	rpc CreateArticle(CreateArticleRequest) returns (Article){}
+	rpc GetArticle(GetByIDRequest) returns (Article) {}
+	rpc UpdateArticle(Article) returns (Article) {}
+	rpc ListArticles(ListArticlesRequest) returns (ArticleListResponse) {}
+	rpc ListArticlesByJournalist(GetByIDRequest) returns (ArticleListResponse) {}
+	rpc UploadArticlePosters(UploadArticlePostersRequest) returns (Article){}
+	rpc DeleteArticlePoster(DeleteArticlePosterRequest) returns (EmptyResponse){}
+}
+
+service CelebritySvc{
+	rpc CreateCelebrity(CreateCelebrityRequest) returns (Celebrity){}
+	rpc GetCelebrity(GetByIDRequest) returns (Celebrity){}
+	rpc UpdateCelebrity(Celebrity) returns (Celebrity){}
+	rpc UploadCelebrityPosters(UploadCelebrityPostersRequest) returns (Celebrity){}
+	rpc DeleteCelebrityPoster(DeleteCelebrityPosterRequest) returns (EmptyResponse){}
+	rpc ListCelebrities(GetAllRequest) returns (CelebrityListResponse){}
+}
+
+service EpisodeSvc{
+	rpc CreateEpisode(CreateEpisodeRequest) returns (Episode){}
+	rpc GetEpisode(GetByIDRequest) returns (Episode){}
+	rpc UpdateEpisode(Episode) returns (Episode){}
+	rpc UploadEpisodePosters(UploadEpisodePostersRequest) returns (Episode){}
+	rpc DeleteEpisodePoster(DeleteEpisodePosterRequest) returns (EmptyResponse){}
+	rpc ListSeasonEpisodes(GetByIDRequest) returns (ListEpisodeResponse){}
+	rpc ListCollectionEpisodes(GetAllRequest)returns (ListEpisodeResponse){}	
+}
+
+service ShowSvc{
+	rpc CreateShow(CreateShowRequest)returns (Show){}
+	rpc GetShow(GetByIDRequest)returns (Show){}
+	rpc UpdateShow(Show) returns(Show){}
+	rpc ListShows(GetAllRequest) returns(ShowListResponse){}
+	rpc UploadSeriesPosters(UploadSeriesPostersRequest) returns (Show){}
+	rpc DeleteSeriesPoster(DeleteSeriesPosterRequest) returns (EmptyResponse){}
+	rpc UploadMoviePosters(UploadMoviePostersRequest) returns (Show){}
+	rpc DeleteMoviePoster(DeleteMoviePosterRequest) returns (EmptyResponse){}
+}
+
+service GenreSvc{
+	rpc CreateGenre(CreateGenreRequest)returns (Genre){}
+	rpc GetGenre(GetByIDRequest)returns (Genre){}
+	rpc UpdateGenre(Genre) returns(Genre){}
+	rpc ListGenres(GetAllRequest) returns(GenreListResponse){}
+	rpc GetGenreByName(GetByNameRequest)returns (Genre){}
+}
+
+service SeasonSvc{
+	rpc CreateSeason(CreateSeasonRequest) returns(Season){}
+	rpc GetSeason(GetByIDRequest)returns (Season){}
+	rpc UpdateSeason(Season)returns (Season){}
+	rpc UploadSeasonPosters(UploadSeasonPostersRequest) returns (Season){}
+	rpc DeleteSeasonPoster(DeleteSeasonPosterRequest) returns (EmptyResponse){}
+	rpc ListShowSeasons(GetByIDRequest)returns (ListSeasonResponse){}
+	rpc ListSeasonsCollection(GetAllRequest)returns (ListSeasonResponse){}	
+}
+
+service JournalistSvc{
+	rpc CreateJournalist(CreateJournalistRequest) returns (Journalist){}
+	rpc GetJournalist(GetByIDRequest) returns (Journalist){}
+	rpc UpdateJournalist(Journalist) returns (Journalist){}
+	rpc ListJournalists(GetAllRequest) returns (JournalistListResponse){}
+	rpc GetJournalistByName(GetByNameRequest)returns (Journalist){}
+}
+
+message UploadArticlePostersRequest {
+	string articleId = 1;
+	repeated string postersPath = 2;
+}
+
+message UploadSeriesPostersRequest {
+	string seriesId = 1;
+	repeated string postersPath = 2;
+}
+
+message DeleteArticlePosterRequest {
+	string articleId = 1;
+	string image = 2;
+}
+
+message UploadMoviePostersRequest {
+	string movieId = 1;
+	repeated string postersPath = 2;
+}
+
+message DeleteSeriesPosterRequest {
+	string seriesId = 1;
+	string image = 2;
+}
+
+message DeleteMoviePosterRequest {
+	string movieId = 1;
+	string image = 2;
+}
+//------ARTICLES------
+message Article{
+	string id =1;
+	string title = 2;
+	google.protobuf.Timestamp releaseDate = 3;
+	repeated string postersPath = 4;
+	string description = 5;
+	ShortJournalist journalist = 6;
+}
+
+message CreateArticleRequest{
+	string title = 1;
+	google.protobuf.Timestamp releaseDate = 2;
+	repeated string postersPath = 3;
+	string description = 4;
+	CreateJournalistRequest journalist = 5;
+}
+
+message ArticleListResponse{
+	repeated Article articles = 1;
+}
+
+//------JOURNALISTS------
+message Journalist{
+	string id = 1;
+	string name = 2;
+}
+
+message CreateJournalistRequest {
+	string name = 1;
+}
+
+message JournalistListResponse {
+	repeated Journalist journalists = 1;
+}
+
+message ShortJournalist {
+	string id = 1;
+}
+
+//------CELEBRITIES------
+message Celebrity{
+	string id = 1;
+	string name = 2; 
+	repeated string postersPath = 3;        
+	google.protobuf.Timestamp dateOfBirth = 4; 
+	google.protobuf.Timestamp dateOfDeath = 5; 
+	string placeOfBirth = 6;
+	string gender = 7;
+	string bio = 8;
+	repeated string occupation = 9;
+}
+
+message CreateCelebrityRequest{
+	string name = 1;   
+	repeated string postersPath = 2;        
+	google.protobuf.Timestamp dateOfBirth = 3; 
+	google.protobuf.Timestamp dateOfDeath = 4; 
+	string placeOfBirth = 5;
+	string gender = 6;
+	string bio = 7;
+	repeated string occupation = 8;
+}
+
+message CelebrityListResponse{
+	repeated Celebrity celebrities = 1;
+}
+
+message GetByIDRequest {
+	string id = 1;
+}
+
+message GetByNameRequest{
+	string name = 1;
+}
+
+message UploadCelebrityPostersRequest {
+	string celebrityId = 1;
+	repeated string postersPath = 2;
+}
+
+message DeleteCelebrityPosterRequest {
+	string celebrityId = 1;
+	string image = 2;
+}
+
+//------EPISODES------
+message Episode{
+	string id = 1;
+	string title = 2;
+	repeated string postersPath = 3;
+	string trailerUrl = 4;
+	ShowLength showLength = 5;
+	double rating = 6;
+	string resume = 7;
+	FilmCrew writtenBy = 8;
+	FilmCrew producedBy = 9;
+	FilmCrew directedBy = 10;
+	ShortCelebrities starring = 11;
+	string seasonId = 12;
+}
+
+message CreateEpisodeRequest{
+	string title = 1;
+	repeated string postersPath = 2;
+	string trailerUrl = 3;
+	ShowLength showLength = 4;
+	double rating = 5;
+	string resume = 6;
+	FilmCrew writtenBy = 7;
+ 	FilmCrew producedBy = 8;
+	FilmCrew directedBy = 9;
+	ShortCelebrities starring = 10;
+	string seasonId = 11;
+}
+
+message ListEpisodeResponse {
+	repeated Episode episodes = 1;
+}
+
+message ShowLength{
+	int32 hours = 1;
+	int32 minutes = 2;
+}
+
+message FilmStaff{
+	string id = 1;
+	string name = 2;
+	repeated string postersPath = 3;
+}
+
+message FilmCrew {
+	repeated FilmStaff filmCrew = 1;
+}
+
+message ShortCelebrity {
+	string id = 1;
+	string name = 2;
+	string roleName = 3;
+	repeated string postersPath = 4;
+}
+
+message ShortCelebrities {
+	repeated ShortCelebrity shortCelebs = 1;
+}
+
+message ShortEpisode{
+	string id =1;
+	string title =2;
+	repeated string postersPath =3;
+	double rating =4;
+ 	string resume =5;
+}
+
+message ShortEpisodeList{
+	repeated ShortEpisode shortEpisodes = 1;
+}
+
+message UploadEpisodePostersRequest {
+	string episodeId = 1;
+	repeated string postersPath = 2;
+}
+
+message DeleteEpisodePosterRequest {
+	string seriesId = 1;
+	string seasonId = 2;
+	string episodeId = 3;
+	string image = 4;
+}
+
+//------SHOWS------
+message Show{
+	string id=1;
+	string title=2;
+	string type=3;
+	repeated string postersPath=4;
+	google.protobuf.Timestamp releaseDate=5;
+	google.protobuf.Timestamp endDate=6;
+	double rating = 7;
+	ShowLength length=8;
+	string trailerUrl=9;
+	ShortGenres genres=10;
+	FilmCrew directedBy =11;
+	FilmCrew producedBy = 12;
+	FilmCrew writtenBy = 13;
+	ShortCelebrities starring = 14;
+	string description = 15;
+	ShortSeasons seasons = 16;
+}
+
+message ShortGenres {
+	repeated ShortGenre genres = 1;
+}
+
+message ShortGenre {
+	string id = 1;
+	string name = 2;
+}
+
+message ShortSeason{
+	string id = 1;
+	string title = 2;
+	repeated string postersPath = 3;
+	double rating = 4;
+}
+
+message ShortSeasons {
+	repeated ShortSeason seasons = 1;
+}
+
+message Genre {
+	string id=1;
+	string name = 2;
+	string description = 3;
+}
+
+message GenreListResponse{
+	repeated Genre genres =1;
+}
+
+message CreateShowRequest{
+	string title=1;
+	string type=2;
+	repeated string postersPath=3;
+	google.protobuf.Timestamp releaseDate=4;
+	google.protobuf.Timestamp endDate=5;
+	double rating = 6;
+	ShowLength length = 7;
+	string trailerUrl = 8;
+	ShortGenres genres = 9;
+	FilmCrew directedBy = 10;
+	FilmCrew producedBy = 11;
+	FilmCrew writtenBy = 12;
+	ShortCelebrities starring = 13;
+	string description = 14;
+	ShortSeasons seasons = 15;
+}
+
+message ShowListResponse {
+	repeated Show shows = 1;
+}
+
+message CreateGenreRequest{
+	string name = 1;
+	string description = 2;
+}
+
+//------SEASONS------
+message Season{
+	string id = 1;
+	string title = 2;
+	string trailerUrl = 3;
+	repeated string postersPath=4;
+	string resume = 5;
+	double rating = 6;
+	google.protobuf.Timestamp releaseDate = 7;
+	FilmCrew writtenBy = 8;
+	FilmCrew producedBy = 9;
+	FilmCrew directedBy = 10;
+	ShortEpisodeList episodes = 11;
+	string showId = 12;
+}
+
+message CreateSeasonRequest{
+	string title = 1;
+	string trailerUrl = 2;
+	string resume = 3;
+	double rating = 4;
+	google.protobuf.Timestamp releaseDate = 5;
+	FilmCrew writtenBy = 6;
+	FilmCrew producedBy = 7;
+	FilmCrew directedBy = 8;
+	ShortEpisodeList episodes = 9;
+	repeated string postersPath=10;
+	string showId = 11;
+}
+
+message ListSeasonResponse{
+	repeated Season seasons = 1;
+}
+
+message UploadSeasonPostersRequest {
+	string seasonId = 1;
+	repeated string postersPath = 2;
+}
+
+message DeleteSeasonPosterRequest {
+	string seriesId = 1;
+	string seasonId = 2;
+	string image = 3;
+}

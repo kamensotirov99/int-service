@@ -1,0 +1,18 @@
+{
+ "clothes": [
+  {
+   "id": "4398075a-4526-4f92-a643-3fb17215c575",
+   "type": "T-Shirt",
+   "price": 19,
+   "size": 32,
+   "gender": "Female"
+  },
+  {
+   "id": "ded13bb4-8d22-4e06-85ce-619479feab91",
+   "type": "T-Shirt",
+   "price": 19,
+   "size": 32,
+   "gender": "Female"
+  }
+ ]
+}
